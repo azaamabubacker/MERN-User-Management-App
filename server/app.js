@@ -6,12 +6,7 @@ const UserModel = require("./models/Users");
 
 const app = express();
 
-// DB
-mongoose.connect(
-  "mongodb+srv://user123:123@users-cluster.igufzqa.mongodb.net/mern-user-management-app?retryWrites=true&w=majority"
-);
-
-// API
+// API GET
 app.get("/getUsers", (req, res) => {
   UserModel.find({}).then((result) => {
     res.json(result).catch((err) => {
@@ -20,6 +15,14 @@ app.get("/getUsers", (req, res) => {
   });
 });
 
-app.listen(8080, () => {
-  console.log("SERVER RUNS SUCCESSFULLY!");
-});
+//DB
+mongoose
+  .connect(
+    "mongodb+srv://user123:123@users-cluster.igufzqa.mongodb.net/mern-user-management-app?retryWrites=true&w=majority"
+  )
+  .then((result) => {
+    app.listen(8080);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
